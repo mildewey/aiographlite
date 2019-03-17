@@ -1,0 +1,13 @@
+type Place implements Attributes {
+  id: String!
+  name: String!
+  description: String
+  plane: String
+}
+
+type Character implements Attributes {
+  id: String!
+  name: String!
+  description: String
+  class: String
+}
