@@ -1,20 +1,25 @@
 type Place implements Attributes {
   id: String!
   name: String!
-  description: String
-  plane: String
+  description: String!
+  plane: String!
 }
 
 type Character implements Attributes {
   id: String!
   name: String!
-  description: String
-  class: String
+  description: String!
+  class: String!
 }
 
 type Faction implements Attributes {
   id: String!
   name: String!
-  description: String
-  alignment: String
+  description: String!
+  alignment: String!
+}
+
+type Relationship implements Attributes {
+  id: String!
+  kind: String!
 }

@@ -2,26 +2,32 @@ from aiohttp import web
 from routes import setup_routes
 import aiosqlite as sql
 
-import schema
-import db
-
-import config
-conf = config.init()
-
 import logging
 logger = logging.getLogger(__name__)
 
+import schema
+import db
+import config
+
+logger.info('Configuring Schema')
+conf = config.init()
+sch = schema.create_schema(conf.schema)
+
 async def initialize_app():
-    logger.info('Parsing Schema')
-    schema.update_schema(schema.schema, conf.schema)
+    logger.info('Initializing Graph')
+    await db.make_graph(conf.database)
 
-    await db.attributes(conf.database, schema.schema_to_tables(conf.schema))
+    logger.info('Initializing Attributes')
+    tables = schema.schema_to_tables(conf.schema)
+    await db.attributes(conf.database, tables)
 
-    logger.info('Initializing app')
+    logger.info('Initializing Webapp')
     app = web.Application()
-    app['conf'] = conf
-
-    logger.info('Setting up routes')
+    app['conf'] = {
+        'database': conf.database,
+        'types': tables.keys()
+    }
+    app['schema'] = sch
     setup_routes(app)
 
     return app
