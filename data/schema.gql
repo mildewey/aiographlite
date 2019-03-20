@@ -11,3 +11,10 @@ type Character implements Attributes {
   description: String
   class: String
 }
+
+type Faction implements Attributes {
+  id: String!
+  name: String!
+  description: String
+  alignment: String
+}

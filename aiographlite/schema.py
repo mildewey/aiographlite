@@ -46,14 +46,14 @@ def schema_to_tables(sch):
 
     for defs in tree.definitions:
         table_name = extract(defs.name.loc)
-        columns = {}
+        columns = []
         for field in defs.fields:
             column_name = extract(field.name.loc)
             if isinstance(field.type, graphql.NonNullTypeNode):
                 column_type = extract(field.type.type.loc)
             else:
                 column_type = extract(field.type.loc)
-            columns[column_name] = column_type
+            columns.append((column_name, column_type))
         tables[table_name] = columns
 
     return tables

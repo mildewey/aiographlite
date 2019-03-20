@@ -26,5 +26,4 @@ async def initialize_app():
 
     return app
 
-app = web.run_app(initialize_app())
-web.run_app(app)
+web.run_app(initialize_app())
